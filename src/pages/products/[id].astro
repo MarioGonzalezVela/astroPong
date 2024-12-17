@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Layout from "../../layouts/Layout.astro";
+
+// export async function getStaticPaths() {
+//   const products = await getCollection("products");
+//   return products.map((product) => ({
+//     params: { id: product.slug },
+//     props: { product },
+//   }));
+// }
+
+const { product } = Astro.props;
+const { data } = product;
+const { name, price, img, description, buy } = data;
+---
+
+<Layout title={`${name} - Products`}>
+  <Header />
+  <div class="flex gap-12">
+    <aside class="flex flex-col items-center gap-4">
+      <img class="rounded w-96 h-auto" src=`/${img}` alt={name} />
+    </aside>
+    <main></main>
+  </div>
+  <Footer />
+</Layout>

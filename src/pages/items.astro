@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const products = await getCollection("products");
+---
+
+<Layout title="Productos tenis de mesa">
+  <main>
+    <Header />
+    <section>
+      <div class="px-4 mx-auto max-w-screen-xl m-6">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        >
+          {
+            products.map((product: { slug: any; data: any }) => {
+              const { slug, data } = product;
+              const { name, price, img, description, buy } = data;
+
+              return (
+                <article class="border border-gray-200 overflow-hidden bg-white rounded-lg p-5">
+                  <a
+                    href={`/public/${slug}`}
+                    class="w-full h-48 flex items-center justify-center"
+                  >
+                    <img
+                      src={img}
+                      alt="Foto producto"
+                      class="h-full object-contain"
+                    />
+                  </a>
+
+                  <div class="p-4 text-center mt-6">
+                    <h2 class="text-semibold mb-2">
+                      <strong>{name}</strong>
+                    </h2>
+                    <p class="text-sm">{description}</p>
+                    <p class="font-bold mt-10">{price} €</p>
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+    <Footer />
+  </main>
+</Layout>
